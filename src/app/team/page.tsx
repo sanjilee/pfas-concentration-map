@@ -69,7 +69,7 @@ const members: TeamMember[] = [
     name: "Sanji Lee",
     role: "Team member",
     initials: "SL",
-    photo: "/team/sanji.jfif"
+    photo: "/team/sanji.jpeg"
   },
   {
     name: "Dominic Mini",
