@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 export const metadata: Metadata = { title: "About" };
 export default function AboutPage() {
   return <main id="main-content" className="editorial-page">
@@ -13,5 +14,12 @@ export default function AboutPage() {
         <h2 className="about-spacing">Statistics and history</h2><p>Minimum, average, and maximum use detected results only. Overview statistics use complete samples with at least one detection. Chart lines stop at nondetects and unavailable results. Concentrations are displayed in ng/L; an overview sum is not a safety rating.</p>
       </div>
     </div>
+    <section className="sponsor-section" aria-labelledby="sponsor-heading">
+      <div>
+        <p className="eyebrow">Project support</p>
+        <h2 id="sponsor-heading">Made possible with support from</h2>
+      </div>
+      <Image className="sponsor-logo" src="/sponsors/ssc.png" alt="Student Sustainability Committee" width={566} height={172} />
+    </section>
   </main>;
 }
