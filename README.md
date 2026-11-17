@@ -1,6 +1,6 @@
 # From Tap to Tributary
 
-A public, read-only explorer for PFAS measurements at water-sampling locations around the University of Illinois Urbana-Champaign campus.
+A public explorer with approved-editor data management for PFAS measurements at water-sampling locations around the University of Illinois Urbana-Champaign campus.
 
 **Website:** https://from-tap-to-tributary.vercel.app/
 
@@ -31,7 +31,7 @@ The MVP focuses on one journey: open the map, choose a location, review its PFAS
 | Hosting | Vercel |
 | Development | GitHub Codespaces |
 
-The browser requests monitoring data through Next.js API routes. Those routes query Supabase. There is no separate backend server, visitor login, or administration dashboard.
+The browser requests monitoring data through Next.js API routes. Those routes query Supabase. Approved editors sign in at `/admin` to manage sites and samples. Public visitors do not need a login. Writes use authorization-checked Supabase database functions.
 
 ## Repository layout
 
@@ -44,7 +44,8 @@ The application root is **`src/`**, which contains `package.json`. Run npm comma
 | `src/app/globals.css` | Global styles |
 | `src/app/about/page.tsx` | Project information |
 | `src/app/team/page.tsx` | Team roster and photo paths |
-| `src/app/api/` | Read-only data endpoints |
+| `src/app/api/` | Public read-only data endpoints |
+| `src/app/admin/` | Team login and data management |
 | `src/components/pfas/` | Map, explorer, detail panel, chart, and header |
 | `src/lib/supabase.ts` | Server-side Supabase client |
 | `src/lib/pfas/` | Data types, API helpers, and measurement calculations |
@@ -144,6 +145,7 @@ From `src/`:
 
 ```bash
 npm run lint
+npm test
 npm run build
 ```
 
@@ -177,10 +179,15 @@ Push application changes to the configured production branch to trigger deployme
 
 The deployed site runs independently of Codespaces. SQL files in Git are not automatically applied to Supabase by a website deployment.
 
+## Team data management
+
+See [admin setup](docs/admin-setup.md) for the database migration, editor provisioning, preview checks, and access revocation. Deploying code alone does not enable writes: apply migration 005 and explicitly approve editor accounts first. No application service-role key is required.
+
 ## Security and scope
 
-The intended access model is public read-only access. All four tables should have row-level security enabled and appropriate SELECT policies. Public API roles should not have INSERT, UPDATE, DELETE, or TRUNCATE privileges. Verify the deployed configuration rather than relying on the absence of editing controls.
+The intended access model is public read-only access plus explicitly approved editors using authorization-checked database functions. All four tables should have row-level security enabled and appropriate SELECT policies. Public API roles should not have INSERT, UPDATE, DELETE, or TRUNCATE privileges. Verify the deployed configuration rather than relying on the absence of editing controls.
 
 Never commit environment files containing credentials, database passwords, privileged API keys, or private database exports. Keep `node_modules/` and `.next/` out of Git. If a privileged credential was committed, rotate it; deleting the current file does not erase Git history.
 
-The MVP intentionally excludes authentication, roles, uploads, admin tools, approval workflows, notifications, live sensors, and predictive analytics.
+The MVP excludes public signup, uploads, approval workflows, notifications, live sensors, and predictive analytics.
+

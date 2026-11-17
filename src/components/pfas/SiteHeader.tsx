@@ -12,9 +12,10 @@ export default function SiteHeader() {
         <span><strong>From Tap to Tributary</strong><small>University of Illinois Urbana-Champaign</small></span>
       </Link>
       <nav aria-label="Primary navigation">
-        {[["/", "Explore"], ["/about", "About"], ["/team", "Team"]].map(([href, label]) =>
+        {[["/", "Explore"], ["/about", "About"], ["/team", "Team"], ["/admin", "Manage"]].map(([href, label]) =>
           <Link key={href} href={href} className={pathname === href ? "active" : ""} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}
       </nav>
     </header>
   </>;
 }
+
