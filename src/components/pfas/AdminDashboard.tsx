@@ -58,7 +58,7 @@ export default function AdminDashboard({ url, publicKey }: { url: string; public
   useEffect(() => {
     let alive = true;
     if (!userId) return;
-    void supabase.rpc("is_pfas_editor").then(({ data, error: failure }) => {
+    void Promise.resolve(supabase.rpc("is_pfas_editor")).then(({ data, error: failure }) => {
       if (!alive) return;
       setEditor(data === true && !failure);
       setChecking(false);
